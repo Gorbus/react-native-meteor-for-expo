@@ -1,8 +1,8 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 
 import call from '../Call';
 import Data from '../Data';
-import {hashPassword} from '../../lib/utils';
+import { hashPassword } from '../../lib/utils';
 
 const TOKEN_KEY = 'reactnativemeteor_usertoken';
 
@@ -24,7 +24,7 @@ module.exports = {
   },
   logout() {
     return new Promise((resolve, reject) => {
-      call('logout', error => {
+      call('logout', (error) => {
         if (error) {
           return reject(error);
         }
@@ -47,9 +47,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       if (typeof selector === 'string') {
         if (selector.indexOf('@') === -1) {
-          selector = {username: selector};
+          selector = { username: selector };
         } else {
-          selector = {email: selector};
+          selector = { email: selector };
         }
       }
 
@@ -81,7 +81,7 @@ module.exports = {
 
         this._handleLoginCallback(error, res);
 
-        call('removeOtherTokens', error => {
+        call('removeOtherTokens', (error) => {
           if (error) {
             return reject(error);
           }
@@ -128,7 +128,7 @@ module.exports = {
     Data._tokenIdSaved = value;
     if (value !== null) {
       this._startLoggingIn();
-      call('login', {resume: value}, (err, result) => {
+      call('login', { resume: value }, (err, result) => {
         this._endLoggingIn();
         this._handleLoginCallback(err, result);
       });
